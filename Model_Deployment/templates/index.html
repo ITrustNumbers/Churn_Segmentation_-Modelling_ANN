@@ -1,0 +1,106 @@
+<h2 id="this-is-a-local-host-deployment-where-the-trained-ann-model-is-used-to-predict-the-probability-of-a-bank-customer-leaving">This is a local host deployment, where the trained ANN model is used to predict the probability of a bank customer leaving</h2>
+<h3 id="the-api-contains-three-different-routes-">The API contains three different routes:</h3>
+<blockquote>
+<ol>
+<li><p>Help Route (&#39;/help&#39;): This is used to get information on how predict and batch predict route work and what should be the proper format
+to send data to the API.  </p>
+</li>
+<li><p>Predict Route (&#39;/predict&#39;): It should be used while predicting the probability for a &#39;Single customer&#39;.For the single prediction the format is given at the end.  </p>
+</li>
+<li><p>Batch Predict Route (&#39;/batch_predict&#39;): It should be used while predicting the probability for a multiple customers.
+For the batch prediction the format is given at the end.  </p>
+</li>
+</ol>
+</blockquote>
+<h3 id="the-feature-should-be-defined-sequentially-in-the-list-">The feature should be defined sequentially in the list:</h3>
+<p>[CreditScore, Geography, Gender, Age, Tenure, Balance, NumOfProducts, HasCrCard, IsActiveMember, EstimatedSalary]</p>
+<h4 id="discription-of-each-feature-">Discription of each feature:</h4>
+<blockquote>
+<ol>
+<li><p>CreditScore: The CreditScore of the Customer  </p>
+</li>
+<li><p>Geography: Where the Customers Lives must be among Spain, Germany, France (Case Sensitive)  </p>
+</li>
+<li><p>Gender: Gender Male or Female (Case Sensitive)  </p>
+</li>
+<li><p>Age: Age of the Customer  </p>
+</li>
+<li><p>Tenure: Number of Tenure ongoing with the bank  </p>
+</li>
+<li><p>Balance: Current Balance in the Account  </p>
+</li>
+<li><p>NumOfProducts: Number of Products of bank that the Customers uses  </p>
+</li>
+<li><p>HasCrCard: Whether the customer has Credit Card or not, If yes than use 1 else give 0  </p>
+</li>
+<li><p>IsActiveMember: If the Customer is an active member of the bank give 1 else 0  </p>
+</li>
+<li><p>EstimatedSalary: The Estimated Salary of the customer</p>
+</li>
+</ol>
+</blockquote>
+<h4 id="example-of-features-values-">Example of Features Values:</h4>
+<blockquote>
+<ol>
+<li>CreditScore: 619</li>
+<li>Geography: Germany</li>
+<li>Gender: Male</li>
+<li>Age: 42</li>
+<li>Tenure: 3</li>
+<li>Balance: 116.85</li>
+<li>NumOfProducts: 2</li>
+<li>HasCrCard: 0</li>
+<li>IsActiveMember: 1</li>
+<li>EstimatedSalary: 165086.43</li>
+</ol>
+</blockquote>
+<h3 id="then-the-feature-list-will-look-like-">Then the feature list will look like:</h3>
+<blockquote>
+<p>=&gt; [619, &#39;Germany&#39;, &#39;Male&#39;, 42, 3, 116.85, 2, 0, 1, 165086.43]</p>
+</blockquote>
+<h3 id="format-for-predict-route-">Format for Predict Route:</h3>
+<h4 id="the-url-must-be-defined-as-">The Url must be defined as:</h4>
+<blockquote>
+<p>Url of the local host + &#39;/predict&#39;</p>
+<p>Example: if the Url of the local host is &#39;<a href="http://127.0.0.1:5000">http://127.0.0.1:5000</a>&#39;,  then the Url for predict route will be:<br> &#39;<a href="http://127.0.0.1:5000/predict">http://127.0.0.1:5000/predict</a>&#39;  </p>
+</blockquote>
+<h4 id="json-schema-for-sending-feature-data-">Json schema for sending feature data:</h4>
+<p>  The data should be send in json format as:  </p>
+<p>  {&#39;data&#39;: [list of feature]}  </p>
+<p>  Taking the example from Feature Discription Section the json schema for predict route will be:  </p>
+<p>  {&#39;data&#39;: [619, &#39;Germany&#39;, &#39;Male&#39;, 42, 3, 116.85, 2, 0, 1, 165086.43]}</p>
+<h3 id="format-for-batch-predict-route-">Format for Batch Predict Route:</h3>
+<h4 id="the-url-must-be-defined-as-">The Url must be defined as:</h4>
+<blockquote>
+<p>Url of the local host + &#39;/batch_predict&#39;  </p>
+<p>Example: if the Url of the local host is &#39;<a href="http://127.0.0.1:5000">http://127.0.0.1:5000</a>&#39; then the Url for batch predict route will be: &#39;<a href="http://127.0.0.1:5000/batch_predict">http://127.0.0.1:5000/batch_predict</a>&#39;  </p>
+</blockquote>
+<h4 id="json-schema-for-sending-feature-data-">Json schema for sending feature data:</h4>
+<p>  The data should be send in json format as:  </p>
+<blockquote>
+<p>{&#39;data&#39;: [[list of 1st customer], [list of 2nd customer], ...., [list of nth customer]]}  </p>
+</blockquote>
+<p>  The list should be a nested list with a seperate list for each customers features inside a list  </p>
+<p>  Example for the json schema with 3 customers for batch predict route will be:   </p>
+<blockquote>
+<p>{&#39;data&#39;: [[619, &#39;Germany&#39;, &#39;Male&#39;, 42, 3, 116.85, 2, 0, 1, 165086.43], 
+            [772, &#39;Spain&#39;, &#39;Female&#39;, 59, 2, 180.5, 1, 1, 1, 149536.28],
+            [619, &#39;Germany&#39;, &#39;Male&#39;, 42, 3, 116.85, 2, 0, 1, 165086.43]] }</p>
+</blockquote>
+<h3 id="for-extracting-data-from-the-response-of-the-api-">For Extracting data from the response of the API:</h3>
+<p>The API will return a Json file with the Prediction (String Describing the Prediction) and Probability for each customer given to the API.  </p>
+<h4 id="the-prediction-strings-will-be-">The Prediction Strings will be:</h4>
+<blockquote>
+<p>If Prediction is classified as &#39;Positive&#39; the string returned will be &#39;The Customer with the given profile will leave the bank&#39;  </p>
+<p>If Prediction is classified as &#39;Negative&#39; the string returned will be &#39;The Customer with the given profile will not leave the bank&#39;  </p>
+</blockquote>
+<h4 id="the-probability-">The Probability:</h4>
+<p>The Probability that the customer will leave the bank that is the probability that the outcome is positive a large probability reflects that
+the customer is more likely to leave the bank  </p>
+<h4 id="the-format-of-the-returned-json-">The Format of the returned Json:</h4>
+<blockquote>
+<p>{&#39;preds&#39;: [List of all the prediction],
+  &#39;probs&#39;: [List of all the probabilities]}  </p>
+</blockquote>
+<h4 id="note-">Note:</h4>
+<p>Incase of predict route, the lists will contain only one prediction and one probability  </p>

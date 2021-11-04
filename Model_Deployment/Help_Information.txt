@@ -1,0 +1,105 @@
+This is a local host deployment, where the trained ANN model is used to predict the probability of a bank customer leaving the bank.
+
+The API contains three different route:
+
+1. Help Route('/help'): This is used to get information on how predict and batch predict route work and what should be the proper format
+to send data to the API.
+
+2. Predict Route('/predict'): It should be used while predicting the probability for a 'Single customer'. 
+For the single prediction the format is given at the end.
+
+3. Batch Predict Route('/batch_predict'): It should be used while predicting the probability for a multiple customers.
+
+For the batch prediction the format is given at the end.
+
+The feature should be defined sequentially in the list:
+ 
+ [CreditScore, Geography, Gender, Age, Tenure, Balance, NumOfProducts, HasCrCard, IsActiveMember, EstimatedSalary]
+ 
+ Discription of each feature:
+
+  1. CreditScore: The CreditScore of the Customer
+  2. Geography: Where the Customers Lives must be among Spain, Germany, France (Case Sensitive)
+  3. Gender: Gender Male or Female (Case Sensitive)
+  4. Age: Age of the Customer
+  5. Tenure: Number of Tenure ongoing with the bank
+  6. Balance: Current Balance in the Account
+  7. NumOfProducts: Number of Products of bank that the Customers uses
+  8. HasCrCard: Whether the customer has Credit Card or not, If yes than use 1 else give 0
+  9. IsActiveMember: If the Customer is an active member of the bank give 1 else 0
+  10. EstimatedSalary: The Estimated Salary of the customer
+
+Example of Features Values:
+ 
+  1. CreditScore: 619
+  2. Geography: Germany
+  3. Gender: Male
+  4. Age: 42
+  5. Tenure: 3
+  6. Balance: 116.85
+  7. NumOfProducts: 2
+  8. HasCrCard: 0
+  9. IsActiveMember: 1
+  10. EstimatedSalary: 165086.43
+ 
+ Then the feature list will look like
+ 
+  [619, 'Germany', 'Male', 42, 3, 116.85, 2, 0, 1, 165086.43]
+
+Format for Predict Route:
+
+  The Url must be defined as: Url of the local host + '/predict'
+
+  E.x: if the Url of the local host is 'http://127.0.0.1:5000' then the Url for predict route will be: 'http://127.0.0.1:5000/predict'
+
+  Json schema for sending feature data:
+
+  The data should be send in json format as:
+
+  {'data': [list of feature]}
+
+  Taking the example from Feature Discription Section the json schema for predict route will be:
+
+  {'data': [619, 'Germany', 'Male', 42, 3, 116.85, 2, 0, 1, 165086.43]}
+
+Format for Batch Predict Route:
+
+  The Url must be defined as: Url of the local host + '/batch_predict'
+
+  E.x: if the Url of the local host is 'http://127.0.0.1:5000' then the Url for batch predict route will be: 'http://127.0.0.1:5000/batch_predict'
+
+  Json schema for sending feature data:
+
+  The data should be send in json format as:
+
+  {'data': [[list of 1st customer], [list of 2nd customer], ...., [list of nth customer]]}
+
+  The list should be a nested list with a seperate list for each customers features inside a list
+
+  Example for the json schema with 3 customers for batch predict route will be:
+ 
+ {'data': [[619, 'Germany', 'Male', 42, 3, 116.85, 2, 0, 1, 165086.43], 
+            [772, 'Spain', 'Female', 59, 2, 180.5, 1, 1, 1, 149536.28],
+            [619, 'Germany', 'Male', 42, 3, 116.85, 2, 0, 1, 165086.43]] }
+
+For Extracing data from the response of the API:
+
+The API will return a Json file with the Prediction (String Describing the Prediction) and Probability for each customer given to the API.
+
+The Prediction Strings will be:
+
+If Prediction is classified as 'Positive' the string returned will be 'The Customer with the given profile will leave the bank'
+
+If Prediction is classified as 'Negative' the string returned will be 'The Customer with the given profile will not leave the bank'
+
+The Probability:
+
+The Probability that the customer will leave the bank that is the probability that the outcome is positive a large probability reflects that
+the customer is more likely to leave the bank
+
+The Format of the returned Json:
+
+{'preds': [List of all the prediction],
+  'probs': [List of all the probabilities]}
+
+Note: Incase of predict route, the lists will contain only one prediction and one probability  
