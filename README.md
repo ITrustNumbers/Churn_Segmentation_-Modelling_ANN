@@ -148,11 +148,131 @@ After experimenting with various configuration of number of neurons and number o
     In Second Layer = 25 Neurons
     In Third Layer = 15 Neurons
     
- 
+ ![ANN Architecture](https://github.com/ITrustNumbers/Churn_Segmentation_Modelling_ANN/blob/master/_images/ANN_Architecture.png)
     
 
-### GridSearchCV Result:
+### Grid Search:
 
 Parameter Space:
 
-> Optimizer = {'adam','rmsprop}
+> Optimizer = ['adam', 'rmsprop'], Epochs = [100, 200], Batch_Size = [32, 64, 128]
+
+Result:
+
+> Best Parameters: Optimer = 'adam', Batch Size = 32, Epochs = 200  
+> Accuracy on Train Set with best parameters = 86%
+
+## 6. Validation & Evaluation: ([Validation Notebook](https://github.com/ITrustNumbers/Churn_Segmentation_Modelling_ANN/blob/master/Validation.ipynb))
+
+### Cross Validation:
+
+> To Evaluate the bias and variance in our model we can use the cross val score method from sklearn to test our model on K-Folds, Doing so will give us a measure of variance in the model accuracy and as well as a measure of central tendency of the accuracy which will be a better approximation of the performance of the model on the training data.
+
+20 K-Fold Results:
+
+    The Mean Accuracy: 0.8498
+    The Standard Deviation of the sample: 0.0187
+    The Variance of Accuracy: 0.0003492
+    
+### Bias & Variance Analysis:
+
+The Mean Accuracy is about 85% which means we have a medium to low bias.
+The Standard Deviation is 0.0187 and accordingly we have a variance of 0.0003492 or about 0.0004 which reflects that our model shows a low variance as well.
+
+![Bias Variance](https://github.com/ITrustNumbers/Churn_Segmentation_Modelling_ANN/blob/master/_images/Bias-Variance.png)
+
+The models shows good results on the training data and is a potential model for segmentation but we still have to check for performance on the test data.
+
+### Evaluation on Test Data:
+
+>The Accuracy reached on the Training data is: 87% and The Accuracy on the test data is: 86%
+The shows that there is no overfitting in the model on the train data since the accuracies on both the train set and the test set is comparable.
+This is because in our ANN architecture we have implemented a 'Dropout' Layer after every hidden layer that reduces overfitting.
+
+### Confusion Matrix:
+
+![Confusion Matrix](https://github.com/ITrustNumbers/Churn_Segmentation_Modelling_ANN/blob/master/Visualizations/Confusion_Matrix.png)
+
+
+Everyting thing is good except that our model has quite a lot of False Negatives(232) which means that there are 232 such customers in the test set that were predicted to stay by our model but in actuality they exited.  
+
+Such high number of False Positive decrease the models 'Recall' or 'Senstivity', we can calculate some other evaluation criteria so that we can better judge our model. 
+
+>We can calculate the ratio's(Criterias) by using the sklearn librabry but here i am manually calculating them as this is a nice practice by which i can remember both the mathematical relation and what the ratio signifies
+
+Evaluation Criteria/Ratio's
+    
+    The Precision(Positive Predictive value) of the Model: 0.8044
+    (The precentage of correct Positive Predictions out of all Positive Predictions)
+    
+    The Recall(True Positive rate) of the Model: 0.4383
+    (The percentage of Positive cases that were correctly identified out of the total Positive cases)
+    
+    The F1 Score of the Model: 0.5674
+    (Harmonic mean of precision and recall)
+    
+
+### Precision Recall Curve:
+
+> A precision-recall curve shows the relationship between precision (= positive predictive value) and recall (= sensitivity) for every possible cut-off. A precision-recall curve helps to visualize how the choice of threshold affects classifier performance, and can even help us select the best threshold for a specific problem.
+
+![Precision Recall Curve](https://github.com/ITrustNumbers/Churn_Segmentation_Modelling_ANN/blob/master/Visualizations/Precision-Recall_Curve.png)
+
+
+> Looking at the Precision Recall Curve there isn't any threshold value at which both Precision and Recall will be greater than 70%. Hence, we have trade off one of the two. Here for this problem the bank must focus on reducing the Flase Positives so that the subset of customers at risk of churning can be reduced so that the bank official have less people to analyse or tackle.   
+
+So, keeping that in mind we can see that reducing False Positive is of greater importance than reducing Flase Negative and this trade translate to having a higher precision than recall. Hence, our original threshold of 0.6 can also be used as a good threshold even at low recall due to high precision.
+
+### Inferences drawn from Evaluation of the model:
+
+As, we can see even if the accuracy is high that does not mean that the model is perfect, the overall precision was nice at 80% but the recall or sensitivity that is the power of the model to find the Positive cases from the data is low at 43.8%.
+
+So, a note for future improvement can be to tweak the model so that the recall can be improved and this can be done by a number of ways but the most straightforward of them all is by simply replacing the scoring parameter of the grid search to F1 Score that will take into account both Precision as well as Recall.
+
+## 7. Model Deployment:
+
+Using Flask library an API is developed that can be used to get prediction for a single customer or a batch of customers, the data can be fed into the API in a JSON file with predifined structure(Schema). For More information about the API and the JSON Schema you see the [Model Deployment](https://github.com/ITrustNumbers/Churn_Segmentation_Modelling_ANN/tree/master/Model_Deployment) Directory of this project.
+
+The API contains three route/method:
+
+    1. /Help : Takes no arguments and return a JSON file whose '.text' method contains informatino about the API and it's usage.
+    
+    2. /predict : Takes a JSON file as argument that must conatins all feature values of a customer for which 
+    prediction is required in a predifined format and return a JSON file with the required prediction and probability of churn
+    
+    3. /batch_predict : Takes a JSON file as argument that must containes all feature values of multiple customers for 
+    which prediction are required and returns a JSON file with the reuired Predictions and respectivy probabilities of churn
+    
+    
+## Conclusion of the Project:
+
+An ANN approach was used to modell the churn rates of a bank, after cleaning and transforming the raw data a Grid Search was immplemented to find the best parameters for the model which were:
+
+    ANN Architecture:
+
+      Number of Hidden Layers = 3
+      Number of Dropout Layers = 3(After Each Hidden Layer)
+      Dropout paramter = 0.1
+      Number of Neurons:
+        In First Layer = 15 Neurons
+        In Second Layer = 25 Neurons
+        In Third Layer = 15 Neurons
+     
+    Best paramters:
+     
+      Optimizer = adam
+      Epochs = 200
+      Batch Size = 32
+     
+The Model was then evaluated with K-Fold validation method, The result from 20 K-Folds were:
+ 
+    The Mean Accuracy: 0.8498
+    The Standard Deviation of the sample: 0.0187
+    The Variance of Accuracy: 0.0003492
+    
+Evaluation on the test data yields:
+
+    Accuracy on Test Data = 87%
+    Precision = 80.4%
+    
+The Model Having high Accuracy as well as Precision is considered to be a good solution for the problem of modelling churn, The model can be used for Segmentation as well as Classification.
