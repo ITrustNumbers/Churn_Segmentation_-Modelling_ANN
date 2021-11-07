@@ -55,11 +55,13 @@ Also, we have a various methods to find the outliers. In this project i've used 
 
 #### Skewness:
 
-> Sample Skewness of each feature was calculated using the scipy stats.skew function and was plotted for analysis
+> Sample Skewness of each feature was calculated using the scipy stats.skew function and was plotted for analysis along with that QQ plots were studied
+
+Skewnedd Plot:
 
 ![Skewness](https://github.com/ITrustNumbers/Churn_Segmentation_Modelling_ANN/blob/master/Visualizations/Skewness_Plot.png)
 
-> Along with that QQ plots were also studied
+QQ Plot: 
 
 ![QQ Plots](https://github.com/ITrustNumbers/Churn_Segmentation_Modelling_ANN/blob/master/Visualizations/QQ_Plots.png)
 
