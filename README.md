@@ -90,3 +90,69 @@ Also, we have a various methods to find the outliers. In this project i've used 
 
 > 3. The Correlation Matrix higlights the point that there are no feature in the dataset with a high correlation(Greater than 0.5) with the target variable 'Exited'. And hence, Traditional ML Models are expected to not give good results. This fact was the whole reason behind the use of ANN for this particular problem and dataset in this project.
 
+## 4. Feature Engineering: ([Feature Engineering Notebook](https://github.com/ITrustNumbers/Churn_Segmentation_Modelling_ANN/blob/master/Feature_Engineering_and_Model_Building.ipynb))
+
+### Categorical Variable Encoding
+
+#### Mapping:  
+>Since 'Gender' was a binary variable it was encoded with the help of the Scikit-Learn LabelEncoder:
+
+    Male ----> 1
+    Female ----> 2
+    
+> The variable 'Geography' had more than 2 categories it was encoded using Scikit-Learn OneHotEncoding and subsequently one of the column was droped to recover from the dummy trap:
+
+    France ----> [0,0]
+    Spain ----> [0,1]
+    Germany ----> [1,0]
+    
+### Standardization
+
+>Standardizing a dataset involves rescaling the distribution of values so that the mean of observed values is 0 and the standard deviation is 1.  
+This can be thought of as subtracting the mean value or centering the data.
+
+Standardization assumes that your observations fit a Gaussian distribution (bell curve) with a well-behaved mean and standard deviation
+
+A value is standardized as follows:
+
+![Z-Score](https://github.com/ITrustNumbers/Churn_Segmentation_Modelling_ANN/blob/master/_images/Standardization.png)
+
+Where the mean is calculated as:
+
+![Mean](https://github.com/ITrustNumbers/Churn_Segmentation_Modelling_ANN/blob/master/_images/Mean.png)
+
+And the standard_deviation is calculated as:
+
+![Standard Deviation](https://github.com/ITrustNumbers/Churn_Segmentation_Modelling_ANN/blob/master/_images/Standard_Deviation.png)
+
+## 5. Modell Building: ([Modell Building Notebook](https://github.com/ITrustNumbers/Churn_Segmentation_Modelling_ANN/blob/master/Feature_Engineering_and_Model_Building.ipynb))
+
+> While building the ANN, i will the sklearn function 'GridSearchCV' for tuning the hyperparameter of the ANN but since the ANN is made through keras library with tensorflow backend the model would not be compatible with sklearn.  
+To resolve this problem we have to use the sklearn wrapper given in the kears library that will take the keras ANN object and gives out a Classifier object that is compatible with the sklearn library and then we can use the GridSearchCV function
+
+To Use the keras wrapper for sklearn 'KerasClassifier'(You can read more about the wrapper [Here](https://faroit.com/keras-docs/1.0.6/scikit-learn-api/))   
+We have to create the architecture of the ANN inside a builder function which will be passed inside the wrapper to generate the sklearn compatible ANN classifier.
+
+You can look at the build function and the wrapper implementation as well as GridSearchCV implementation in my project in this [notebook](https://github.com/ITrustNumbers/Churn_Segmentation_Modelling_ANN/blob/master/Feature_Engineering_and_Model_Building.ipynb)
+
+
+### ANN Architecture:
+
+After experimenting with various configuration of number of neurons and number of hidden layers, I settled with a Architecture that containe:
+
+    Number of Hidden Layers = 3
+    Number of Dropout Layers = 3(After Each Hidden Layer)
+    Dropout paramter = 0.1
+    Number of Neurons:
+    In First Layer = 15 Neurons
+    In Second Layer = 25 Neurons
+    In Third Layer = 15 Neurons
+    
+ 
+    
+
+### GridSearchCV Result:
+
+Parameter Space:
+
+> Optimizer = {'adam','rmsprop}
