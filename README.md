@@ -5,16 +5,16 @@ This is a complete Project that revovles around churn modelling and it contains 
 > 'Churn’ refers to the rate at which a subscription company loses its subscribers because of subscription cancellations or elapses. This leads to loss of revenue. Churn rates really matter for subscription businesses because they are an important indicator of long term success.  
 # Highlights of the Project
 
-- ### Data Cleaning
-    - ### Outlier Detection
-    - ### Skewness
-- ### Exploratory Data Analysis
-- ### Featrue Engineering
-- ### Model Development
-    - ### Hyperparameter tuning using GridSearchCV
-    - ### Bias and Variance Analysis using Cross Validation Score
-    - ### Validation and Evaluation
-- ### Model Deployment using Flask 
+- #### Data Cleaning
+    - #### Outlier Detection
+    - #### Skewness
+- #### Exploratory Data Analysis
+- #### Featrue Engineering
+- #### Model Development
+    - #### Hyperparameter tuning using GridSearchCV
+    - #### Bias and Variance Analysis using Cross Validation Score
+    - #### Validation and Evaluation
+- #### Model Deployment using Flask 
 
 # Walkthrough:
 
