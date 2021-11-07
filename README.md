@@ -9,7 +9,7 @@ This is a complete Project that revolves around churn modelling and it contains 
     - #### Outlier Detection
     - #### Skewness
 - #### Exploratory Data Analysis
-- #### Featrue Engineering
+- #### Feature Engineering
 - #### Model Development
     - #### Hyperparameter tuning using GridSearchCV
     - #### Bias and Variance Analysis using Cross Validation Score
