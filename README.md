@@ -69,11 +69,24 @@ Also, we have a various methods to find the outliers. In this project i've used 
 
 > For getting insights from the data various plots like Histograms, Pivoted Histograms and heatmaps were created
 
-Histogram for Categorical Variables:
+#### Histogram for Categorical Variables:
 > Categorical variables: 'Geography', 'Gender', 'NumberofProducts', 'HasCrCrad', 'IsActiveMember', 'Exited'(Target variable/Label)
 
 ![Histogram for Categorical Variables](https://github.com/ITrustNumbers/Churn_Segmentation_Modelling_ANN/blob/master/Visualizations/Histograms.png)
 
-Histogram for Pivot Data of Categorical variables on the Target Variable
+#### Histogram for Pivot Data of Categorical variables on the Target Variable(Exited):
 
+![Histogram for Pivot Data of Categorical variables on the Target Variable](https://github.com/ITrustNumbers/Churn_Segmentation_Modelling_ANN/blob/master/Visualizations/Histogram_againts_Exited.png)
+
+#### Correlation Matrix:
+
+![Correlation Matrix](https://github.com/ITrustNumbers/Churn_Segmentation_Modelling_ANN/blob/master/Visualizations/Correlation_Matrix.png)
+
+#### Observations from EDA:
+
+> 1. The Distribution of the Target variable is highly imbalanced, out of 10000 instances 7961 were negative samples or sample were the customer did not leave the bank which translate to a Negative to Postive imbalance of alomst 0.79 - 0.21, which means that even a naive classifier(only gives negative prediction) will reach an accuracy of 79% and hence the baseline accuracy for evaluation can be set at 80%.  
+
+> 2. The histograms of variables when pivoted around the target variable shows that there are variable which have highly imbalance pivot distribution for example 'NumofProducts' and 'Gender'. Such distribution are both good and bad for Machine Learning algorithms, good because such features can be used to create a clearer distinction between the classes by the classifier and bad because models tends to overfit to the training data due to such distribution and hence a dropout layer which will reduce overfitting is necessary while training the ANN.  
+
+> 3. The Correlation Matrix higlights the point that there are no feature in the dataset with a high correlation(Greater than 0.5) with the target variable 'Exited'. And hence, Traditional ML Models are expected to not give good results. This fact was the whole reason behind the use of ANN for this particular problem and dataset in this project.
 
