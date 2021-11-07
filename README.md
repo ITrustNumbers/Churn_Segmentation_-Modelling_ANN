@@ -51,5 +51,29 @@ Also, we have a various methods to find the outliers. In this project i've used 
     
 > Two data points were identified as outliers and were hence removed
 
+![outliers](https://github.com/ITrustNumbers/Churn_Segmentation_Modelling_ANN/blob/master/_images/Outliers.png)
+
+#### Skewness:
+
+> Sample Skewness of each feature was calculated using the scipy stats.skew function and was plotted for analysis
+
+![Skewness](https://github.com/ITrustNumbers/Churn_Segmentation_Modelling_ANN/blob/master/Visualizations/Skewness_Plot.png)
+
+> Along with that QQ plots were also studied
+
+![QQ Plots](https://github.com/ITrustNumbers/Churn_Segmentation_Modelling_ANN/blob/master/Visualizations/QQ_Plots.png)
+
+> The Study showed both of the two continuous variable 'Balance' and 'EstimatedSalary' were skewed, And since we have to scale our data to fit an ANN we can use a StandardScalar that will not only scale the data but also standardize it. And hence, we don't have to treat the data for skewness as Standardization will negative a lot of this skewness.
+
+## 3. Exploratory Data Analysis(EDA): ([EDA Notebook](https://github.com/ITrustNumbers/Churn_Segmentation_Modelling_ANN/blob/master/Data_Cleaning_and_EDA.ipynb))
+
+> For getting insights from the data various plots like Histograms, Pivoted Histograms and heatmaps were created
+
+Histogram for Categorical Variables:
+> Categorical variables: 'Geography', 'Gender', 'NumberofProducts', 'HasCrCrad', 'IsActiveMember', 'Exited'(Target variable/Label)
+
+![Histogram for Categorical Variables](https://github.com/ITrustNumbers/Churn_Segmentation_Modelling_ANN/blob/master/Visualizations/Histograms.png)
+
+Histogram for Pivot Data of Categorical variables on the Target Variable
 
 
