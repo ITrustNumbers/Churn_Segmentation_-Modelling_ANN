@@ -1,4 +1,6 @@
 # Churn Segmentation Modelling ANN
+![Python 3.7](https://img.shields.io/badge/Python-3.7-yellow)  ![Tensforflow 2.7.0](https://img.shields.io/badge/Tensorflow-2.7.0-blue)
+
 
 This is a complete Project that revolves around churn modelling and it contains every aspect from data cleaning down to model deployment. The data of a bank was used in this implementation and for modelling purposes an Artificial Neural Network was trained and used to predict the probability that a given customer would leave the bank(With 87% accuracy) and for deployment an API was developed which can be used for single prediction as well as batch prediction for a number of cutomers
 
